@@ -125,7 +125,29 @@ Every trade has one buyer AND one seller—they cancel out. But price movement r
 ## Prerequisites
 
 - Python 3.8+
-- HuggingFace account with API key
+- **HuggingFace account** (free) - Create at: https://huggingface.co/join
+- **HuggingFace API token** (HF_TOKEN) - Get at: https://huggingface.co/settings/tokens
+- **HuggingFace Pro subscription** (optional, $9/month) - Recommended for higher rate limits
+  - Free tier: ~300-500 requests/day
+  - Pro tier: ~10,000 requests/day
+  - Subscribe at: https://huggingface.co/pricing
+
+### Rate Limits
+
+**Free Tier:**
+- **~300-500 text generation requests per day**
+- Sufficient for personal/casual use
+- Requests throttled if exceeded (HTTP 429 errors)
+
+**Pro Tier ($9/month):**
+- **~10,000 text generation requests per day** for LLM API calls
+- Each user query can make **2-30 API calls** depending on complexity:
+  - Simple queries (e.g., "What is AAPL price?"): ~2-4 calls
+  - Complex queries (e.g., analyzing 5 stocks): ~5-15 calls
+  - Large batch queries (e.g., 100 stocks): ~15-30 calls
+- Priority queue for faster responses
+- Rate limits reset daily
+- Monitor your usage at: https://huggingface.co/settings/usage
 
 ---
 
@@ -142,10 +164,17 @@ Every trade has one buyer AND one seller—they cancel out. But price movement r
    pip install smolagents yfinance
    ```
 
-3. **Set up API key**
+3. **Set up HuggingFace API token** (required):
    ```bash
-   export HF_TOKEN="your_huggingface_api_key"
+   export HF_TOKEN="your_huggingface_api_token"
    ```
+
+   Or create a `.env` file:
+   ```
+   HF_TOKEN=your_huggingface_api_token
+   ```
+
+   **Note:** This app works with a free HuggingFace account. Pro subscription ($9/month) is recommended if you need higher rate limits or run many queries daily.
 
 ---
 
